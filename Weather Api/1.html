@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Api</title>
+    <style>
+        body{
+            background-image: url(/Image/4393.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        section{
+           
+            justify-content: center;
+            text-align: center;
+           margin-top: 180px;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <section>
+        <h1 style="color:gold; font-weight: bolder;">Weather API</h1>
+        <span style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Enter Your country:- </span> <input type="text" id="wea" style="background-color:silver;"><br><br>
+
+        <input type="button" value="Get Details" name="btn" onclick="getWeatherApi()" style="background-color:goldenrod;"><br> <br>
+        <span style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">City:- </span><input type="text" id="ct" style="background-color:silver;"><br><br>
+        <span style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Temperature:- </span><input type="text" id="temp" style="background-color:silver;"><br><br>
+    </section>
+
+</body>
+
+
+
+    <script>
+        function getWeatherApi(){
+            country = document.getElementById("wea").value;
+            obj = new XMLHttpRequest();
+            obj.onload = function(){
+                resp =this.responseText;
+                jobj = JSON.parse(resp);
+                document.getElementById("ct").value = jobj.location.name;
+                document.getElementById("temp").value = jobj.current.temp_c;
+                document.getElementById("pic").src = jobj.current.condition.icon;
+                
+            };
+            obj.open("GET","http://api.weatherapi.com/v1/current.json?key=2c8f83ed84bc4ab9bfb51226240606&q="+ country, true);
+            obj.send();
+        }
+    </script>
+</html>
